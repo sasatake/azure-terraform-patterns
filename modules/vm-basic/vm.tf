@@ -31,6 +31,10 @@ resource "azurerm_linux_virtual_machine" "vm_basic_app" {
   }
   disable_password_authentication = true
 
+  boot_diagnostics {
+    storage_account_uri = azurerm_storage_account.vm_basic.primary_blob_endpoint
+  }
+
   tags = {
     createdBy = "Terraform"
     module    = "vm-basic"
