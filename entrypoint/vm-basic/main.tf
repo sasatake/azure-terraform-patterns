@@ -8,6 +8,7 @@ module "vm_basic" {
 }
 
 resource "local_file" "tls_private_key" {
-  content  = module.vm_basic.vm_private_key
-  filename = "${path.module}/${module.vm_basic.vm_private_key_name}"
+  content         = module.vm_basic.vm_private_key
+  filename        = "${path.module}/${module.vm_basic.vm_private_key_name}"
+  file_permission = "0600"
 }
