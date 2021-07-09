@@ -40,3 +40,15 @@ resource "azurerm_linux_virtual_machine" "vm_basic_app" {
     module    = "vm-basic"
   }
 }
+
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "vm_basic_app" {
+  virtual_machine_id    = azurerm_linux_virtual_machine.vm_basic_app.id
+  location              = azurerm_resource_group.vm_basic.location
+  enabled               = true
+  daily_recurrence_time = "1900"
+  timezone              = "Tokyo Standard Time"
+
+  notification_settings {
+    enabled = false
+  }
+}
