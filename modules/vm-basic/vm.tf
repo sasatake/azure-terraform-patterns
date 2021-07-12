@@ -26,9 +26,9 @@ resource "azurerm_linux_virtual_machine" "vm_basic_app" {
     disk_size_gb         = 30
   }
 
-  admin_username = "azureuser"
+  admin_username = var.admin_user_name
   admin_ssh_key {
-    username   = "azureuser"
+    username   = var.admin_user_name
     public_key = tls_private_key.vm_basic_app.public_key_openssh
   }
   disable_password_authentication = true

@@ -3,6 +3,10 @@ variable "main_region" {
   default = "japaneast"
 }
 
+variable "admin_user_name" {
+  type = string
+}
+
 variable "virtual_network_address_spaces" {
   type    = list(string)
   default = ["10.0.0.0/16"]
@@ -10,5 +14,5 @@ variable "virtual_network_address_spaces" {
 
 variable "subnet_address_prefixes" {
   type    = list(string)
-  default = ["10.0.1.0/24","10.0.2.0/24"]
+  default = ["10.0.1.0/24", "10.0.2.0/24"]
 }
