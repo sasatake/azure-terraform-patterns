@@ -14,14 +14,16 @@ resource "azurerm_linux_virtual_machine" "vm_basic_app" {
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "18.04-LTS"
+    offer     = "0001-com-ubuntu-server-focal"
+    sku       = "20_04-lts"
     version   = "latest"
   }
 
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
+    name                 = "osdisk-vmbasicapp000"
+    disk_size_gb         = 30
   }
 
   admin_username = "azureuser"
@@ -41,6 +43,22 @@ resource "azurerm_linux_virtual_machine" "vm_basic_app" {
   }
 }
 
+resource "azurerm_managed_disk" "vm_basic_app" {
+  name                 = "disk-${azurerm_linux_virtual_machine.vm_basic_app.name}-001"
+  resource_group_name  = azurerm_resource_group.vm_basic.name
+  location             = azurerm_resource_group.vm_basic.location
+  storage_account_type = "Standard_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = 10
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "vm_basic_app" {
+  managed_disk_id    = azurerm_managed_disk.vm_basic_app.id
+  virtual_machine_id = azurerm_linux_virtual_machine.vm_basic_app.id
+  lun                = "10"
+  caching            = "ReadWrite"
+}
+
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "vm_basic_app" {
   virtual_machine_id    = azurerm_linux_virtual_machine.vm_basic_app.id
   location              = azurerm_resource_group.vm_basic.location
@@ -52,3 +70,4 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "vm_basic_app" {
     enabled = false
   }
 }
+
