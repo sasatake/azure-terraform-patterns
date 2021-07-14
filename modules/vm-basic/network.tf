@@ -25,7 +25,7 @@ resource "azurerm_public_ip" "vm_basic_app" {
   location            = azurerm_resource_group.vm_basic.location
   resource_group_name = azurerm_resource_group.vm_basic.name
   sku                 = "Basic"
-  allocation_method   = "Dynamic"
+  allocation_method   = "Static"
 
   tags = {
     createdBy = "Terraform"
