@@ -36,6 +36,8 @@ resource "azurerm_linux_virtual_machine" "vm_basic_app" {
   boot_diagnostics {
     storage_account_uri = azurerm_storage_account.vm_basic.primary_blob_endpoint
   }
+  
+  custom_data = filebase64("${path.module}/templates/vm/cloud-config.yml")
 
   tags = {
     createdBy = "Terraform"
