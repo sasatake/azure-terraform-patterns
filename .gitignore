@@ -4,3 +4,4 @@ terraform.tfstate
 terraform.tfstate.backup
 *.pem
 ssh_alias.*.sh
+*_kube_config
