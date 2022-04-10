@@ -1,0 +1,30 @@
+# File: .github/workflows/OIDC_workflow.yml
+
+name: Run Terraform with OIDC
+on:
+  push:
+    - "release/**"
+
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.1.7
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
