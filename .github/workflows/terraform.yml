@@ -9,13 +9,15 @@ on:
 permissions:
   id-token: write
   contents: read
+
+defaults:
+  run:
+    working-directory: entrypoint/${GITHUB_REF##*/}
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: echo branch name
-        run: echo ${GITHUB_REF##*/}
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
@@ -24,14 +26,11 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
-        working-directory: ./entrypoint/${GITHUB_REF##*/}
 
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
-        working-directory: ./entrypoint/${GITHUB_REF##*/}
 
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color
-        working-directory: ./entrypoint/${GITHUB_REF##*/}
