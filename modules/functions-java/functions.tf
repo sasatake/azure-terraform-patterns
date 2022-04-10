@@ -1,38 +1,36 @@
-resource "azurerm_app_service_plan" "functions_java" {
+resource "azurerm_service_plan" "functions_java" {
   name                = "${var.prefix}-service-plan"
-  resource_group_name = azurerm_resource_group.functions
+  resource_group_name = azurerm_resource_group.functions_java.name
   location            = var.region
-  kind                = "FunctionApp"
+  os_type             = "Linux"
+  sku_name            = "Y1"
 
-  sku {
-    tier = "Dynamic"
-    size = "Y1"
-  }
-
-  tags = locals.default_tag
+  tags = local.default_tag
 }
 
-resource "azurerm_function_app" "functions_java" {
-  name                      = "${var.prefix}-functions"
-  resource_group_name       = azurerm_resource_group.functions.name
-  location                  = var.region
-  app_service_plan_id       = azurerm_app_service_plan.functions.id
-  storage_connection_string = azurerm_storage_account.functions.primary_connection_string
-  version                   = "~4"
+resource "azurerm_linux_function_app" "functions_java" {
+  name                        = "${var.prefix}-functions"
+  resource_group_name         = azurerm_resource_group.functions_java.name
+  location                    = var.region
+  service_plan_id             = azurerm_service_plan.functions_java.id
+  storage_account_name        = azurerm_storage_account.functions_java.name
+  functions_extension_version = "~4"
 
-  app_settings {
-    AppInsights_InstrumentationKey = azurerm_application_insights.functions.instrumentation_key
+  app_settings = {
+    AppInsights_InstrumentationKey = azurerm_application_insights.functions_java.instrumentation_key
   }
 
   site_config {
-    java_version = 11
+    application_stack {
+      java_version = 11
+    }
   }
 
   identity {
     type = "SystemAssigned"
   }
 
-  tags = locals.default_tag
+  tags = local.default_tag
 }
 
 data "azurerm_role_definition" "contributor" {
@@ -40,8 +38,8 @@ data "azurerm_role_definition" "contributor" {
 }
 
 resource "azurerm_role_assignment" "functions_java" {
-  name               = azurerm_function_app.functions.name
-  scope              = data.azurerm_subscription.primary.id
-  role_definition_id = "${data.azurerm_subscription.subscription.id}${data.azurerm_role_definition.contributor.id}"
-  principal_id       = azurerm_function_app.functions.identity[0]["principal_id"]
+  name               = azurerm_linux_function_app.functions_java.name
+  scope              = data.azurerm_subscription.current.subscription_id
+  role_definition_id = "${data.azurerm_subscription.current.subscription_id}${data.azurerm_role_definition.contributor.id}"
+  principal_id       = azurerm_linux_function_app.functions_java.identity[0].principal_id
 }

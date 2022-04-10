@@ -1,6 +1,6 @@
 resource "azurerm_cosmosdb_account" "functions_java" {
   name                = "${var.prefix}-db"
-  resource_group_name = azurerm_resource_group.functions.name
+  resource_group_name = azurerm_resource_group.functions_java.name
   location            = var.region
   offer_type          = "Standard"
   kind                = "GlobalDocumentDB"
@@ -16,5 +16,5 @@ resource "azurerm_cosmosdb_account" "functions_java" {
     failover_priority = 0
   }
 
-  tags = locals.default_tag
+  tags = local.default_tag
 }
