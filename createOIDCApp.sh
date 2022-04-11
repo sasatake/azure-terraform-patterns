@@ -10,7 +10,7 @@ fi
 appName=terraform-provisioning-app
 repoUser=sasatake
 repoName=azure-terraform-patterns
-branchName=master
+branchName=release/*
 
 subscriptionId=$(az account list --all --query '[?isDefault].id' --output tsv --only-show-errors)
 tenantId=$(az account list --all --query '[?isDefault].tenantId' --output tsv --only-show-errors)
@@ -38,7 +38,6 @@ az role assignment create \
   --only-show-errors > /dev/null
 echo ""
 
-# objectId=a49c0939-4502-41b3-9b30-50b0ed2e217c
 uri="https://graph.microsoft.com/beta/applications/${objectId}/federatedIdentityCredentials"
 subject="repo:${repoUser}/${repoName}:ref:refs/heads/${branchName}"
 
