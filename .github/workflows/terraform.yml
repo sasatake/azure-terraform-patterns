@@ -12,7 +12,7 @@ permissions:
 
 defaults:
   run:
-    working-directory: entrypoint/${GITHUB_REF##*/}
+    working-directory: entrypoint/${github.ref##*/}
 
 jobs:
   build-and-deploy:
@@ -25,10 +25,7 @@ jobs:
 
       - name: debug
         id: debug
-        run: |
-          env
-          pwd
-          tree
+        run: env
 
       - name: Terraform Init
         id: init
