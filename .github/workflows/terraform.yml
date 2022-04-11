@@ -13,10 +13,6 @@ permissions:
 env:
   BRANCH_NAME: ${GITHUB_REF##*/}
 
-defaults:
-  run:
-    working-directory: entrypoint/${env.BRANCH_NAME}
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -39,11 +35,14 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
+        working-directory: entrypoint/${env.BRANCH_NAME}
 
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
+        working-directory: entrypoint/${env.BRANCH_NAME}
 
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color
+        working-directory: entrypoint/${env.BRANCH_NAME}
