@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 env:
-  BRANCH_NAME: ${{GITHUB_REF##*/}}
+  BRANCH_NAME: ${GITHUB_REF##*/}
 
 jobs:
   build-and-deploy:
