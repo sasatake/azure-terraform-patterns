@@ -10,14 +10,17 @@ permissions:
   id-token: write
   contents: read
 
-defaults:
-  run:
-    working-directory: entrypoint/functions-java
+# defaults:
+#   run:
+#     working-directory: entrypoint/functions-java
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      # - name: Checkout
+      #   uses: actions/checkout@v3
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
@@ -25,7 +28,7 @@ jobs:
 
       - name: debug
         id: debug
-        run: pwd
+        run: tree
 
       - name: Terraform Init
         id: init
