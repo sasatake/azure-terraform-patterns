@@ -10,7 +10,7 @@ fi
 appName=terraform-provisioning-app
 repoUser=sasatake
 repoName=azure-terraform-patterns
-branchName=release/*
+branchName=release/functions-java
 
 subscriptionId=$(az account list --all --query '[?isDefault].id' --output tsv --only-show-errors)
 tenantId=$(az account list --all --query '[?isDefault].tenantId' --output tsv --only-show-errors)
