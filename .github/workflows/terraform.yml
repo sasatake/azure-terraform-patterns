@@ -12,7 +12,7 @@ permissions:
 
 defaults:
   run:
-    working-directory: entrypoint/${github.ref##*/}
+    working-directory: entrypoint/functions-java
 
 jobs:
   build-and-deploy:
