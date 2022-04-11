@@ -25,7 +25,7 @@ jobs:
 
       - name: debug
         id: debug
-        run: env
+        run: pwd
 
       - name: Terraform Init
         id: init
