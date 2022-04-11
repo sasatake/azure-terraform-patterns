@@ -10,9 +10,9 @@ permissions:
   id-token: write
   contents: read
 
-# defaults:
-#   run:
-#     working-directory: entrypoint/functions-java
+defaults:
+  run:
+    working-directory: entrypoint/${GITHUB_REF##*/}
 
 jobs:
   build-and-deploy:
