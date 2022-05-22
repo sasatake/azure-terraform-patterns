@@ -33,13 +33,13 @@ resource "azurerm_linux_function_app" "functions_java" {
   tags = local.default_tag
 }
 
-data "azurerm_role_definition" "contributor" {
-  name = "Contributor"
-}
+# data "azurerm_role_definition" "contributor" {
+#   name = "Contributor"
+# }
 
-resource "azurerm_role_assignment" "functions_java" {
-  name               = azurerm_linux_function_app.functions_java.name
-  scope              = data.azurerm_subscription.current.subscription_id
-  role_definition_id = "${data.azurerm_subscription.current.subscription_id}${data.azurerm_role_definition.contributor.id}"
-  principal_id       = azurerm_linux_function_app.functions_java.identity[0].principal_id
-}
+# resource "azurerm_role_assignment" "functions_java" {
+#   name               = azurerm_linux_function_app.functions_java.name
+#   scope              = data.azurerm_subscription.current.subscription_id
+#   role_definition_id = "${data.azurerm_subscription.current.subscription_id}${data.azurerm_role_definition.contributor.id}"
+#   principal_id       = azurerm_linux_function_app.functions_java.identity[0].principal_id
+# }
