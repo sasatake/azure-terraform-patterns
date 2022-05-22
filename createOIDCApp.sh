@@ -77,6 +77,6 @@ echo ""
 
 set -e
 
-gh secret set AZURE_CLIENT_ID --body ${appId} --app actions --repos ${repoUser}/${repoName}
-gh secret set AZURE_SUBSCRIPTION_ID --body ${subscriptionId} --app actions --repos ${repoUser}/${repoName}
-gh secret set AZURE_TENANT_ID --body ${tenantId} --app actions --repos ${repoUser}/${repoName}
+gh secret set ARM_CLIENT_ID --body ${appId} --app actions --repos ${repoUser}/${repoName}
+gh secret set ARM_SUBSCRIPTION_ID --body ${subscriptionId} --app actions --repos ${repoUser}/${repoName}
+gh secret set ARM_TENANT_ID --body ${tenantId} --app actions --repos ${repoUser}/${repoName}
