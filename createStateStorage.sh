@@ -10,7 +10,7 @@ fi
 LOCATION=japaneast
 RESOURCE_GROUP_NAME=terraform-state-manager-rg
 STORAGE_ACCOUNT_NAME=terraformstatemng
-CONTAINER_NAME=state
+CONTAINER_NAME=tfstate
 
 # Create resource group
 az group create --name $RESOURCE_GROUP_NAME --location ${LOCATION}
