@@ -12,5 +12,6 @@ terraform {
     storage_account_name = "terraformstatemng"
     container_name       = "tfstate"
     key                  = "functions-java/terraform.tfstate"
+    use_oidc             = true
   }
 }
