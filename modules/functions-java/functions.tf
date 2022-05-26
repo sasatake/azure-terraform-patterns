@@ -34,7 +34,7 @@ resource "azurerm_linux_function_app" "functions_java" {
 }
 
 resource "azurerm_role_assignment" "functions_java_storage_access" {
-  scope                = azurerm_storage_account.functions_java.identity.0.principal_id
+  scope                = azurerm_storage_account.functions_java.id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_linux_function_app.functions_java.identity.0.principal_id
 }
