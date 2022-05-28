@@ -31,7 +31,16 @@ echo ""
 
 echo "create role assignment."
 az role assignment create \
-  --role contributor \
+  --role "Contributor" \
+  --description "Assign ${appName} to Contributor." \
+  --subscription $subscriptionId \
+  --assignee-object-id $assigneeObjectId \
+  --assignee-principal-type ServicePrincipal \
+  --only-show-errors > /dev/null
+echo ""
+az role assignment create \
+  --role "User Access Administrator" \
+  --description "Assign ${appName} to User Access Administrator." \
   --subscription $subscriptionId \
   --assignee-object-id $assigneeObjectId \
   --assignee-principal-type ServicePrincipal \
