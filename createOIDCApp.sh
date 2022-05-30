@@ -11,6 +11,7 @@ appName=terraform-provisioning-app
 repoUser=sasatake
 repoName=azure-terraform-patterns
 branchName=release/functions-java
+description='Provisioning Terraform By GitHub Actions.'
 
 subscriptionId=$(az account list --all --query '[?isDefault].id' --output tsv --only-show-errors)
 tenantId=$(az account list --all --query '[?isDefault].tenantId' --output tsv --only-show-errors)
@@ -55,7 +56,7 @@ createFederatedIdentity(){
   az rest \
     --method POST \
     --uri ${uri} \
-    --body "{'name':'${appName}','subject':'${subject}','description':'Provisioning Terraform By GitHub Actions.','issuer':'https://token.actions.githubusercontent.com','audiences':['api://AzureADTokenExchange']}" \
+    --body "{'name':'${appName}','subject':'${subject}','description':'${description}','issuer':'https://token.actions.githubusercontent.com','audiences':['api://AzureADTokenExchange']}" \
     > /dev/null
 }
 
@@ -64,22 +65,16 @@ updateFederatedIdentity(){
   az rest \
     --method PATCH \
     --uri "${uri}/${appName}" \
-    --body "{'name':'${appName}','subject':'${subject}','description':'Provisioning Terraform By GitHub Actions.','issuer':'https://token.actions.githubusercontent.com','audiences':['api://AzureADTokenExchange']}" \
+    --body "{'name':'${appName}','subject':'${subject}','description':'${description}','issuer':'https://token.actions.githubusercontent.com','audiences':['api://AzureADTokenExchange']}" \
     > /dev/null
 }
 
-set +e
+federatedIdentityCount=$(az rest --method GET --uri ${uri} --query 'length(value[])')
 
-az rest \
-  --method GET \
-  --uri ${uri} >& /dev/null
-
-federatedIdentityIsCreated=$?
-
-if [ $((federatedIdentityIsCreated)) -eq 0 ]; then
-  updateFederatedIdentity
+if [ $((federatedIdentityCount)) -eq 0 ]; then  
+  createFederatedIdentity
 else
-  createFederatedIdentity  
+  updateFederatedIdentity
 fi
 echo ""
 echo ""
