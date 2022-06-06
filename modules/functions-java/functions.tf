@@ -18,8 +18,9 @@ resource "azurerm_windows_function_app" "functions_java" {
   storage_uses_managed_identity = true
 
   app_settings = {
-    AppInsights_InstrumentationKey = azurerm_application_insights.functions_java.instrumentation_key
-    WEBSITE_RUN_FROM_PACKAGE       = 1
+    AppInsights_InstrumentationKey           = azurerm_application_insights.functions_java.instrumentation_key
+    WEBSITE_RUN_FROM_PACKAGE                 = 1
+    WEBSITE_CONTENTAZUREFILECONNECTIONSTRING = azurerm_storage_account.functions_java.primary_connection_string
   }
 
   site_config {
