@@ -45,3 +45,9 @@ resource "azurerm_role_assignment" "functions_java_storage_access" {
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_windows_function_app.functions_java.identity.0.principal_id
 }
+
+resource "azurerm_role_assignment" "functions_java_queue_access" {
+  scope                = azurerm_storage_account.functions_java.id
+  role_definition_name = "Storage Queue Data Contributor"
+  principal_id         = azurerm_windows_function_app.functions_java.identity.0.principal_id
+}
